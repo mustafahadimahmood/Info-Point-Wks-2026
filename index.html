@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Weekly Info Point</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 40px auto;
+    }
+    h1 {
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    select {
+      padding: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Weekly Info Point 2026</h1>
+<p><strong>📅 Jeden Mittwoch um 16:00 Uhr</strong></p>
+
+<table id="attendanceTable">
+  <thead>
+    <tr>
+      <th>Datum</th>
+      <th>Christa</th>
+      <th>Ruben</th>
+      <th>Mustafa</th>
+      <th>Theo</th>
+      <th>Cordula</th>
+      <th>Neli</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Zeilen werden per JavaScript generiert -->
+  </tbody>
+</table>
+
+<script>
+const tableBody = document.getElementById("attendanceTable").getElementsByTagName('tbody')[0];
+const names = ['Christa','Ruben','Mustafa','Theo','Cordula','Neli'];
+
+// Jahr für die Planung
+const year = 2026;
+
+// Startdatum: 1. Januar
+let date = new Date(year, 0, 1);
+
+// Funktion, um alle Mittwoche zu erzeugen
+while (date.getFullYear() === year) {
+  if (date.getDay() === 3) { // Mittwoch = 3
+    const row = tableBody.insertRow();
+    
+    // Datum
+    const cellDate = row.insertCell();
+    const dd = String(date.getDate()).padStart(2,'0');
+    const mm = String(date.getMonth()+1).padStart(2,'0');
+    const yyyy = date.getFullYear();
+    cellDate.textContent = `${dd}.${mm}.${yyyy}`;
+
+    // Für jeden Teilnehmer eine Auswahl
+    names.forEach(() => {
+      const td = row.insertCell();
+      const select = document.createElement('select');
+      ['Ja','Vielleicht','Nein'].forEach(opt => {
+        const option = document.createElement('option');
+        option.value = opt;
+        option.text = opt;
+        select.appendChild(option);
+      });
+      td.appendChild(select);
+    });
+  }
+  // Nächster Tag
+  date.setDate(date.getDate() + 1);
+}
+</script>
+
+</body>
+</html>
